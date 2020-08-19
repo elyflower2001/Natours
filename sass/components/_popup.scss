@@ -1,0 +1,133 @@
+.popup {
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100vh;
+    background-color:rgba($black, 0.8);
+    z-index:9999;
+    // nascondo all'inizio (no display:none, perchè non riesco ad animare)
+    opacity:0;
+    visibility:hidden;
+    transition:all .4s;
+    
+    // funziona solo su safari
+    @supports (-webkit-backdrop-filter: blur(10px)) or (backdrop-filter: blur(10px)) {
+        -webkit-backdrop-filter: blur(10px); 
+        backdrop-filter: blur(10px);
+        background-color:rgba($black, 0.3);
+    }
+
+    &__content {
+        @include centered-element;
+        width:75%;
+        background-color:$white;
+        box-shadow:0 2rem 4rem rgba($black, .2);
+        border-radius:$border-radius-small;
+        display:table;
+        overflow:hidden;
+        opacity:0;
+        transform: translate(-50%, -50%) scale(.25);
+        transition:all .4s .2s;
+
+        @include respond(phone) {
+            width:90%;
+        }
+    }
+
+    &__left {
+        width:33.333333%;
+        display:table-cell;
+        vertical-align:middle;
+
+        @include respond(tab-land) {
+            width:100%;
+            display:inline-block;
+        }
+    }
+
+    &__right {
+        width:66.666667%;
+        display:table-cell;
+        vertical-align:middle;
+        padding:3rem 5rem;
+
+        @include respond(tab-land) {
+            width:100%;
+            display:block;
+            padding-top:2rem;
+        }
+    }
+
+    &__img {
+        display:block;
+        width:100%;
+
+        @include respond(tab-land) {
+            width:50%;
+            float:left;
+            height:25.5rem;
+        }
+
+        @include respond(tab-land) {
+            width:50%;
+            float:left;
+            height:11.5rem;
+        }
+    }
+
+    &__text {
+        font-size:1.4rem;
+        margin-bottom: 4rem;
+        -moz-column-count:2;
+        -moz-column-gap:4rem;
+        -moz-column-rule:1px solid $gray-light-2;
+        column-count:2;
+        column-gap:4rem;
+        column-rule:1px solid $gray-light-2;
+
+        // A capo automatico
+        -moz-hyphens:auto;
+        -ms-hyphens:auto;
+        -webkit-hyphens:auto;
+        hyphens:auto;
+
+        @include respond(phone) { 
+            -moz-column-count:1;
+            -moz-column-gap:0;
+            -moz-column-rule:1px solid $gray-light-2;
+            column-count:1;
+            column-gap:0;
+            column-rule:1px solid $gray-light-2;
+        }
+    }
+
+    /** Functionality **/
+    &:target {
+        opacity:1;
+        visibility:visible;
+    }
+
+    &:target &__content {
+        opacity:1;
+        transform: translate(-50%, -50%) scale(1);
+    }
+
+    &__close {
+        &:link, &:visited {
+            position:absolute;
+            top:2.5rem;
+            right:2.5rem;
+            font-size:3rem;
+            line-height:1;
+            color:$gray-dark;
+            text-decoration:none;
+            display:inline-block;
+            transition:all 2s;
+        }
+
+        &:hover {
+            color:$color-primary;
+        }
+    }
+}

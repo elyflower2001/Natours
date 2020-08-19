@@ -1,0 +1,62 @@
+/* - vh: 95% della viewport height 
+   - background-position: fa in modo che al resize l'immagine parta sempre dall'alto, cioè non venga tagliata in alto 
+   - doppia immagine: con background-image e gradiente, la più in alto è la prima
+   - VSCode opacità colore: per settare opacità, vado in hover sul colore, poi clicco sulla barra dove c'è esadecimale
+   - clip-path: posso creare forme diverse, o punti di riferimento sono le coordinate x y dei punti del poligono (dipende dal numero di angoli); nell'esempio sotto sono 4 punti.
+   */
+.header {
+    height:85vh;    
+    background-image: linear-gradient(
+        to right, 
+        rgba($color-primary-light, 0.8), 
+        rgba($color-primary-dark, 0.8)
+    ), url(../img/hero-small.jpg);
+    background-size: cover;
+    background-position:top;
+    position:relative;
+    backface-visibility: hidden;
+
+    @supports(clip-path: polygon(0 0)) or (-webkit-clip-path: polygon(0 0)) {
+        -webkit-clip-path: polygon(0 0, 100% 0, 100% 75vh, 0 100%);
+        clip-path: polygon(0 0, 100% 0, 100% 75vh, 0 100%);
+        height:95vh;
+    }
+
+    // 192dpi = media query for apple retina screen
+    // min-width:37.5em = 600px
+    // min-width:200px è media query per big screens (125em)
+    // (-webkit-min-device-pixel-ratio:2) and (min-width:37.5em) è per safari (non capisce i 192dpi)
+    @media (min-resolution:192dpi) and (min-width:37.5em),  
+    (-webkit-min-device-pixel-ratio:2) and (min-width:37.5em),
+    (min-width:125em){
+        background-image: linear-gradient(
+            to right, 
+            rgba($color-primary-light, 0.8), 
+            rgba($color-primary-dark, 0.8)
+        ), url(../img/hero.jpg);
+    }
+
+    @include respond(phone) {
+        -webkit-clip-path: polygon(0 0, 100% 0, 100% 85vh, 0 100%);
+        clip-path: polygon(0 0, 100% 0, 100% 85vh, 0 100%);
+    }
+
+    &__logo-box {
+        position:absolute;
+        top:4rem;
+        left:4rem;
+    }
+
+    &__logo {
+        height:3.5rem;
+    }
+
+    /* Centrare elemento: lo metto in posizione assoluta al 50%, poi uso transform traslate con valori negativi per centrarlo*/
+    &__text-box {
+        position:absolute;
+        top:43%;
+        left:50%;
+        transform: translate(-50%, -50%);
+        text-align:center;
+    }
+}

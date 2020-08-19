@@ -1,0 +1,103 @@
+.story {
+    width:75%;
+    margin:0 auto;
+    box-shadow:0 3rem 6rem rgba($black, .1);
+    background-color:rgba($white, .6);
+    border-radius: $border-radius-small;
+    padding:6rem;
+    padding-left:9rem;
+    font-size:1.6rem;
+    transform:skewX(-12deg);
+
+    @include respond(tab-port) {
+        width:100%;
+        padding:4rem;
+        padding-left:7rem;
+    }
+
+    @include respond(phone) {
+        transform:skewX(0);
+        width:100%;
+        padding:4rem;
+        padding-left:7rem;
+    }
+
+    & > * {
+        transform:skewX(12deg);
+
+        @include respond(phone) {
+            transform:skewX(0);
+        }
+    }
+
+    &__shape {
+        width:15rem;
+        height:15rem;
+        float:left;        
+        transform:translateX(-3rem) skewX(12deg);
+        position:relative;
+        overflow:hidden;
+        border-radius:50%;
+
+        // style per i browser che supportano clip-path
+        @supports(clip-path: polygon(0 0)) or (-webkit-clip-path: polygon(0 0)) {
+            border-radius:none;
+            // forma dell'elemento
+            -webkit-clip-path: circle(50% at 50% 50%);
+            clip-path: circle(50% at 50% 50%);
+            // forma del testo intorno all'elemento
+            -webkit-shape-outside: circle(50% at 50% 50%);
+            shape-outside: circle(50% at 50% 50%);
+        }
+
+        @include respond(phone) {
+            transform:translateX(-3rem) skewX(0);
+        }
+
+        
+    }
+
+    &__img {
+        height:100%;
+        transform:translateX(-4rem) scale(1.4);
+        -webkit-backface-visibility: hidden;
+        -moz-backface-visibility: hidden;
+        backface-visibility:hidden;
+        transition:all .5s;
+    }
+
+    &__text {
+        height:100%;
+    }
+
+    &__caption {
+        position:absolute;
+        top:50%;
+        left:50%;
+        // setto posizione iniziale in modo che non si veda
+        transform:translate(-50%, 20%);
+        opacity:0;
+        color:$white;
+        text-transform: uppercase;
+        font-size:1.7rem;
+        text-align:center;
+        transition:all .5s;
+        // fix per tremlio
+        -webkit-backface-visibility: hidden;
+        -moz-backface-visibility: hidden;
+        backface-visibility:hidden;
+    }
+
+    &:hover &__caption  {
+        opacity:1;
+        transform:translate(-50%, -50%);
+        -webkit-backface-visibility: hidden;
+        -moz-backface-visibility: hidden;
+        backface-visibility:hidden;
+    }
+
+    &:hover &__img  {
+        transform:translateX(-4rem) scale(1);
+        filter: blur(3px) brightness(80%);
+    }
+}

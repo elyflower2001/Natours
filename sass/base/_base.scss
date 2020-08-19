@@ -1,0 +1,40 @@
+*, *::after, *::before {
+    margin:0;
+    padding:0;
+    box-sizing:inherit;
+}
+
+// definisce quant'è 1 rem 
+// -> prende valore default del browser che è 16px, questa regola lo porta a 10px
+// nel file typography setto body a 1.6rem (= font di default del body è 16px)
+html {
+    font-size: 62.5%;       // 1rem = 10px  (default style)
+
+    @include respond(tab-land) {
+        font-size: 56.25%;   // 1 rem = 9px
+    }
+
+    @include respond(tab-port) {
+        font-size: 50%;      // 1 rem = 8px
+    }
+
+    @include respond(big-desk) {
+        font-size: 75%;      // 1 rem = 12px
+    }
+}
+
+/* nel body, ereditato da tutti; non nel *, meglio qui */
+body {
+    box-sizing:border-box;
+    position:relative;
+    padding:3rem;
+
+    @include respond(tab-port) {
+        padding:0;
+    }
+}
+
+::selection {
+    background-color:$color-primary-light;
+    color:$white;
+}
